@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>时间旅行者的女儿</title>
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  body{
+    margin:0;min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",serif;
+    background:radial-gradient(ellipse at top,#1e1b4b 0%,#0f172a 60%,#020617 100%);
+    color:#e2e8f0;display:flex;justify-content:center;padding:14px;
+  }
+  .app{width:100%;max-width:430px;padding-bottom:40px;}
+  h1{
+    font-size:20px;text-align:center;margin:8px 0 2px;
+    color:#c4b5fd;letter-spacing:2px;
+    text-shadow:0 0 20px rgba(167,139,250,0.5);
+  }
+  .sub{text-align:center;font-size:12px;color:#818cf8;margin-bottom:14px;letter-spacing:1px;}
+  .card{
+    background:rgba(30,27,75,0.6);
+    border:1px solid rgba(139,92,246,0.25);
+    border-radius:18px;padding:16px;margin-bottom:12px;
+    box-shadow:0 8px 30px rgba(99,102,241,0.15);
+    backdrop-filter:blur(6px);
+  }
+  .girlBox{text-align:center;padding:6px 0;}
+  .girl{
+    font-size:80px;line-height:1;display:inline-block;
+    transition:all .5s;cursor:pointer;user-select:none;
+    filter:drop-shadow(0 0 16px rgba(167,139,250,0.6));
+  }
+  .girl:active{transform:scale(0.93);}
+  .girlName{
+    text-align:center;font-size:18px;font-weight:700;
+    color:#ddd6fe;margin-top:8px;letter-spacing:1px;
+  }
+  .girlAge{
+    text-align:center;font-size:13px;color:#a78bfa;margin-top:2px;
+  }
+  .speech{
+    background:rgba(139,92,246,0.15);
+    border:1px solid rgba(139,92,246,0.4);
+    border-radius:14px;padding:10px 14px;font-size:13px;
+    color:#ddd6fe;display:inline-block;margin-top:10px;max-width:94%;
+    min-height:20px;line-height:1.7;font-style:italic;
+  }
+  .statRow{
+    display:flex;justify-content:space-between;font-size:13px;
+    padding:6px 0;color:#c7d2fe;
+    border-bottom:1px dashed rgba(139,92,246,0.15);
+  }
+  .statRow:last-child{border-bottom:none;}
+  .statRow .v{color:#fbbf24;font-weight:700;}
+  .statRow .vsmall{color:#a78bfa;font-size:11px;font-weight:400;}
+  .btn{
+    width:100%;border:none;border-radius:14px;padding:14px;font-size:15px;
+    font-weight:700;margin-top:10px;color:#fff;
+    background:linear-gradient(135deg,#8b5cf6,#6366f1);
+    transition:transform .08s;letter-spacing:1px;
+    box-shadow:0 4px 16px rgba(139,92,246,0.35);
+    font-family:inherit;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn.gold{
+    background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#451a03;
+    box-shadow:0 4px 16px rgba(251,191,36,0.35);
+  }
+  .btn.ghost{
+    background:transparent;border:1px solid rgba(139,92,246,0.5);
+    color:#c4b5fd;box-shadow:none;
+  }
+  .btn.small{padding:10px;font-size:13px;margin-top:8px;}
+  .btn.danger{
+    background:transparent;border:1px solid rgba(248,113,113,0.5);
+    color:#fca5a5;box-shadow:none;
+  }
+  .speedGrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px;}
+  .speedItem{
+    background:rgba(15,23,42,0.7);border:1px solid rgba(139,92,246,0.25);
+    border-radius:12px;padding:12px 6px;text-align:center;cursor:pointer;
+    transition:all .15s;
+  }
+  .speedItem.active{
+    background:linear-gradient(135deg,rgba(251,191,36,0.3),rgba(245,158,11,0.3));
+    border-color:#fbbf24;box-shadow:0 0 12px rgba(251,191,36,0.4);
+  }
+  .speedItem .sp{font-size:15px;font-weight:800;color:#fbbf24;}
+  .speedItem .lb{font-size:10px;color:#a78bfa;margin-top:2px;}
+  .storyText{
+    font-size:14px;line-height:2;color:#ddd6fe;text-align:center;
+    font-style:italic;padding:6px 0;
+  }
+  .bigEmoji{font-size:80px;text-align:center;line-height:1;}
+  .fadeIn{animation:fadeIn .6s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .divider{
+    text-align:center;color:#6366f1;font-size:14px;letter-spacing:4px;
+    margin:8px 0;opacity:.6;
+  }
+  .endingTitle{
+    text-align:center;font-size:22px;font-weight:800;color:#fbbf24;
+    letter-spacing:2px;margin:14px 0 8px;
+  }
+  .memories{
+    background:rgba(15,23,42,0.7);border-radius:12px;padding:12px;
+    font-size:12px;color:#c7d2fe;line-height:1.9;font-style:italic;
+    margin-top:12px;max-height:260px;overflow-y:auto;
+  }
+  .memories b{color:#fbbf24;font-style:normal;}
+  .hidden{display:none;}
+  .center{text-align:center;}
+  .quote{
+    border-left:3px solid #8b5cf6;padding-left:12px;
+    color:#c4b5fd;font-style:italic;line-height:1.9;margin:10px 0;
+    font-size:14px;
+  }
+  .nameInput{
+    width:100%;background:rgba(15,23,42,0.8);
+    border:1px solid rgba(139,92,246,0.4);border-radius:12px;
+    padding:12px;color:#ddd6fe;font-size:16px;outline:none;
+    text-align:center;font-family:inherit;margin-top:8px;
+  }
+  .nameInput:focus{border-color:#a78bfa;box-shadow:0 0 0 3px rgba(139,92,246,0.2);}
+  .eventTag{
+    display:inline-block;font-size:11px;padding:3px 10px;border-radius:10px;
+    background:rgba(139,92,246,0.3);color:#ddd6fe;margin-bottom:6px;
+  }
+  .missionBox{text-align:center;padding:10px 0;}
+  .missionTitle{
+    font-size:15px;color:#fbbf24;letter-spacing:2px;margin-bottom:10px;font-weight:700;
+  }
+  .missionNote{
+    font-size:12px;color:#c4b5fd;line-height:1.8;margin-bottom:14px;
+    background:rgba(139,92,246,0.12);border-radius:10px;padding:10px;
+  }
+  .missionTime{
+    font-size:46px;font-weight:800;color:#fbbf24;
+    font-variant-numeric:tabular-nums;letter-spacing:2px;
+    text-shadow:0 0 30px rgba(251,191,36,0.5);
+  }
+  .missionSub{
+    font-size:12px;color:#818cf8;margin-top:6px;letter-spacing:1px;
+  }
+  .progressOuter{
+    height:12px;background:rgba(15,23,42,0.8);border-radius:8px;
+    overflow:hidden;margin:16px 0;border:1px solid rgba(139,92,246,0.3);
+  }
+  .progressInner{
+    height:100%;border-radius:8px;
+    background:linear-gradient(90deg,#8b5cf6,#fbbf24);
+    box-shadow:0 0 12px rgba(251,191,36,0.6);
+  }
+  .missionInfo{
+    font-size:13px;color:#c7d2fe;line-height:1.8;margin-top:10px;
+  }
+  .statusTag{
+    display:inline-block;font-size:12px;padding:3px 12px;border-radius:10px;
+    background:rgba(139,92,246,0.3);color:#ddd6fe;margin-bottom:8px;
+  }
+  .statusTag.running{background:rgba(74,222,128,0.3);color:#bbf7d0;}
+  .statusTag.paused{background:rgba(251,191,36,0.3);color:#fde68a;}
+  .choiceBox{
+    background:rgba(15,23,42,0.7);border-radius:12px;padding:14px;margin-top:10px;
+  }
+  .choiceQ{font-size:14px;color:#ddd6fe;line-height:1.9;margin-bottom:10px;}
+  .choiceBtn{
+    width:100%;border:none;border-radius:12px;padding:12px;font-size:14px;
+    font-weight:600;margin-top:8px;color:#ddd6fe;
+    background:rgba(139,92,246,0.2);
+    border:1px solid rgba(139,92,246,0.4);
+    transition:all .15s;text-align:left;font-family:inherit;
+  }
+  .choiceBtn:active{transform:scale(0.98);background:rgba(139,92,246,0.35);}
+  .choiceEffect{font-size:11px;color:#818cf8;margin-top:4px;font-style:italic;}
+  .roleGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+  .roleItem{
+    background:rgba(15,23,42,0.7);border:1px solid rgba(139,92,246,0.25);
+    border-radius:14px;padding:16px;text-align:center;cursor:pointer;
+    transition:all .15s;
+  }
+  .roleItem.active{
+    background:linear-gradient(135deg,rgba(139,92,246,0.4),rgba(99,102,241,0.4));
+    border-color:#a78bfa;box-shadow:0 0 12px rgba(139,92,246,0.4);
+  }
+  .roleItem .ico{font-size:34px;}
+  .roleItem .nm{font-size:14px;color:#c4b5fd;margin-top:6px;}
+  .traitRow{
+    display:flex;justify-content:space-between;font-size:12px;
+    padding:4px 0;color:#c7d2fe;
+  }
+  .traitRow .v{color:#fbbf24;font-weight:700;}
+  .diaryBox{
+    background:rgba(15,23,42,0.7);border-radius:12px;padding:12px;
+    font-size:13px;color:#c7d2fe;line-height:2;margin-top:10px;
+    font-style:italic;border-left:3px solid #8b5cf6;
+  }
+  .worldTag{
+    display:inline-block;font-size:11px;padding:3px 12px;border-radius:12px;
+    background:linear-gradient(135deg,rgba(139,92,246,0.4),rgba(236,72,153,0.3));
+    color:#fbcfe8;margin-bottom:8px;letter-spacing:1px;
+  }
+  .worldName{
+    text-align:center;font-size:16px;font-weight:800;color:#f0abfc;
+    letter-spacing:2px;margin:6px 0 4px;
+    text-shadow:0 0 16px rgba(236,72,153,0.5);
+  }
+  .worldDesc{
+    text-align:center;font-size:12px;color:#c4b5fd;line-height:1.9;
+    font-style:italic;padding:0 4px;
+  }
+  .romanceCard{
+    background:linear-gradient(135deg,rgba(236,72,153,0.18),rgba(139,92,246,0.18));
+    border:1px solid rgba(236,72,153,0.4);
+    border-radius:16px;padding:14px;margin-bottom:12px;
+    box-shadow:0 8px 30px rgba(236,72,153,0.15);
+  }
+  .romanceTitle{
+    font-size:13px;color:#f9a8d4;font-weight:800;letter-spacing:2px;
+    margin-bottom:8px;text-align:center;
+  }
+  .romanceText{
+    font-size:14px;color:#fce7f3;line-height:2;font-style:italic;
+    text-align:center;
+  }
+  .timeline{
+    margin-top:12px;padding:10px;background:rgba(15,23,42,0.7);
+    border-radius:12px;font-size:11px;color:#c7d2fe;line-height:1.9;
+  }
+  .timeline b{color:#fbbf24;}
+  .tagRow{
+    display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px;
+  }
+  .miniTag{
+    font-size:11px;padding:3px 10px;border-radius:10px;
+    background:rgba(139,92,246,0.25);color:#ddd6fe;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <h1>⏳ 时间旅行者的女儿</h1>
+  <div class="sub">你拥有时间，而她只有一生</div>
+
+  <div id="gameArea">
+    <div id="introPanel" class="hidden"></div>
+    <div id="mainPanel" class="hidden">
+      <div class="card">
+        <div class="girlBox">
+          <div class="girl" id="girlEmoji">👧</div>
+          <div class="girlName" id="girlName">明月</div>
+          <div class="girlAge" id="girlAge"></div>
+          <div class="speech" id="speech"></div>
+        </div>
+      </div>
+
+      <div class="card" id="worldCard">
+        <div style="text-align:center;" id="worldBox"></div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:14px;color:#c4b5fd;font-weight:700;letter-spacing:1px;">🕰 这次要离开多久</div>
+        <div style="font-size:11px;color:#818cf8;margin-top:4px;">1 分钟专注 = 她长大 1 岁</div>
+        <div class="speedGrid" id="speedGrid"></div>
+      </div>
+
+      <button class="btn gold" id="travelBtn">✨ 启程离开</button>
+
+      <div class="card" style="margin-top:12px;">
+        <div class="statRow"><span>你的旅行</span><span class="v" id="playerTrips">第 1 次</span></div>
+        <div class="statRow"><span>她的年龄</span><span class="v" id="ageVal">8 岁</span></div>
+        <div class="statRow"><span>你们相见</span><span class="v" id="meetCount">0 次</span></div>
+        <div class="statRow"><span>她对你的依恋</span><span class="v" id="attachVal">0</span><span class="vsmall" id="attachDesc"></span></div>
+        <div class="statRow"><span>她对你的陌生</span><span class="v" id="strangeVal">0</span><span class="vsmall" id="strangeDesc"></span></div>
+        <div class="statRow"><span>她对你的怨恨</span><span class="v" id="resentVal">0</span><span class="vsmall" id="resentDesc"></span></div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:13px;color:#c4b5fd;font-weight:700;margin-bottom:6px;">👧 明月的性格</div>
+        <div id="traitsArea"></div>
+      </div>
+
+      <button class="btn ghost small" id="resetBtn">重新开始</button>
+    </div>
+
+    <div id="missionPanel" class="hidden"></div>
+    <div id="returnPanel" class="hidden"></div>
+  </div>
+
+  <div id="endingArea" class="hidden"></div>
+</div>
+
+<script>
+(function(){
+  const SAVE_KEY = 'time_daughter_v6';
+  const SECONDS_PER_YEAR = 60; // 1 分钟 = 1 岁
+
+  // ===== 流速：年 -> 专注秒数 =====
+  const SPEEDS = [
+    { id:'y1',  years:1,  label:'1 年',  desc:'1 分钟' },
+    { id:'y2',  years:2,  label:'2 年',  desc:'2 分钟' },
+    { id:'y3',  years:3,  label:'3 年',  desc:'3 分钟' },
+    { id:'y5',  years:5,  label:'5 年',  desc:'5 分钟' },
+    { id:'y8',  years:8,  label:'8 年',  desc:'8 分钟' },
+    { id:'y15', years:15, label:'15 年', desc:'15 分钟' }
+  ];
+
+  // ===== 世界观库 =====
+  const WORLDS = [
+    { id:'modern', name:'现代都市', desc:'平凡的世界，有学校、有地铁、有便利店。她会在这样的世界里长大。',
+      emoji:'🏙️' },
+    { id:'magic', name:'魔法学院', desc:'这里有会说话的猫、悬浮的楼梯、用星星点灯的夜晚。她也许会成为一位魔法师。',
+      emoji:'🪄' },
+    { id:'space', name:'星际殖民地', desc:'人类散落在群星之间。她所在的星球有双月，夜晚天上有两道银光。',
+      emoji:'🚀' },
+    { id:'steam', name:'蒸汽朋克城', desc:'齿轮、蒸汽、黄铜管道。天空永远是灰的，但人们的心是热的。',
+      emoji:'⚙️' },
+    { id:'apocalypse', name:'末世废墟', desc:'文明崩塌后的世界。她在废墟中长大，学会了用罐头发豆芽。',
+      emoji:'🌒' },
+    { id:'fairytale', name:'童话王国', desc:'森林里有会唱歌的树，湖底沉睡着古老的钟。她的名字被写在一本预言书上。',
+      emoji:'🏰' },
+    { id:'cyber', name:'赛博霓虹', desc:'义体、霓虹、永不熄灭的雨。数据洪流中，她是你唯一的真实。',
+      emoji:'🌃' },
+    { id:'ancient', name:'东方古国', desc:'青瓦、长街、纸灯笼。她在这样的世界里，读诗、习字、等你归来。',
+      emoji:'🏮' },
+    { id:'ocean', name:'海底之城', desc:'整座城市沉在海底，头顶是游动的鲸。她用气泡说话，用珊瑚写字。',
+      emoji:'🌊' },
+    { id:'dream', name:'梦境边缘', desc:'这里的一切都由记忆织成。她住在一栋会呼吸的房子里，窗外是别人的梦。',
+      emoji:'🌙' }
+  ];
+
+  // ===== 性格库 =====
+  const PERSONALITIES = [
+    { id:'sunny', name:'阳光', desc:'她总是笑着，喜欢和人说话' },
+    { id:'quiet', name:'安静', desc:'她喜欢一个人待着，看窗外' },
+    { id:'brave', name:'勇敢', desc:'她不怕黑，也不怕一个人' },
+    { id:'soft',  name:'温柔', desc:'她会把最后一块糖留给你' },
+    { id:'stub',  name:'倔强', desc:'她认定的事情，很难改变' },
+    { id:'dream', name:'爱幻想', desc:'她总觉得，云上面住着人' },
+    { id:'cold',  name:'冷淡', desc:'她很少表达情绪，但心里有很多话' },
+    { id:'curious',name:'好奇', desc:'她什么都想知道，什么都想试' }
+  ];
+
+  // ===== 爱好库 =====
+  const HOBBIES = [
+    { id:'book', name:'看书', desc:'她房间堆满了书' },
+    { id:'draw', name:'画画', desc:'她画的全是天空和门' },
+    { id:'music',name:'唱歌', desc:'她一个人时会哼歌' },
+    { id:'star', name:'看星星', desc:'她总在阳台上站很久' },
+    { id:'animal',name:'动物', desc:'她捡回过三只猫' },
+    { id:'sport',name:'运动', desc:'她跑得比男孩子还快' },
+    { id:'write',name:'写作', desc:'她写了很多故事，藏起来不给人看' },
+    { id:'science',name:'科学', desc:'她想弄明白时间是怎么回事' }
+  ];
+
+  const ORIENTATIONS = [
+    { id:'hetero', name:'喜欢异性' },
+    { id:'homo', name:'喜欢同性' },
+    { id:'bi', name:'都可以' },
+    { id:'ace', name:'对恋爱没兴趣' }
+  ];
+
+  // ===== 台词（按年龄段，每段 20+ 条） =====
+  const SPEECH = {
+    child: [ // 8-12
+      "你这次待多久？",
+      "给我讲个故事好不好？",
+      "你是不是又要走了？",
+      "我画了你，你看。",
+      "我同学说，她爸爸每天都回家。",
+      "我昨天做了一个梦，梦见你回来了。",
+      "你会不会有一天，不回来了？",
+      "我数学考了 95 分！",
+      "老师今天表扬我了。",
+      "你不在的时候，我数着日子。",
+      "我给你留了半块蛋糕，可是它坏了。",
+      "你可以不走吗？就一次。",
+      "我把你给我的糖纸夹在书里了。",
+      "我在门口写了一个'正'字，你不在的日子。",
+      "今天下雨了，我一个人回家的。",
+      "你会不会忘记我的生日？",
+      "我帮你把拖鞋放在门口了。",
+      "我学会系鞋带了！",
+      "隔壁的小狗生宝宝了，好可爱。",
+      "我偷偷用你的杯子喝水了。",
+      "我给你画了一扇门，你从这里回来。",
+      "老师说，人不能一直等一个人。",
+      "可是我想等你。"
+    ],
+    teen: [ // 12-18
+      "你看起来一点都没变。",
+      "我已经不是小孩子了。",
+      "你不在的时候，我学会了自己长大。",
+      "有时候我会恨你。",
+      "我有很多话想问你，可是你总是不在。",
+      "我不需要你了。",
+      "我梦见你的时候，醒来会更难过。",
+      "你为什么不能像别人的爸爸/妈妈一样？",
+      "我谈恋爱了。不，没什么。",
+      "我最近成绩下降了，但我不想告诉你。",
+      "你走的时候，我都没有哭。",
+      "我已经忘了你身上的味道了。",
+      "我把你送我的东西都收起来了。",
+      "我讨厌别人问我'你爸爸/妈妈呢'。",
+      "我学会了一个人看电影。",
+      "我剪了短发，你没看出来。",
+      "我今天在街上，看到一个背影很像你的人。",
+      "我考上了。可是我不知道跟谁说。",
+      "我开始写日记了，但里面没有你。",
+      "你上次走的时候，我在窗户后面看着你。",
+      "我曾经以为，你会在我毕业典礼上出现。",
+      "我好像，慢慢不期待了。",
+      "你不用道歉，我已经不在意了。",
+      "我有时候会想，我是不是不该被你捡到。"
+    ],
+    adult: [ // 18-30
+      "我等你等了好久。",
+      "你回来啦，我泡了茶。",
+      "我已经不年轻了。",
+      "谢谢你回来。",
+      "我有自己的生活了。",
+      "我搬出去住了。",
+      "我找到了一份工作。",
+      "我遇到一个人，他对我很好。",
+      "我有时候会想，你到底是不是真的存在。",
+      "我学会了不期待。",
+      "你不用道歉，真的。",
+      "我已经不怪你了。",
+      "我今天加班到很晚，回来看到你，愣住了。",
+      "我给你留了一把钥匙。",
+      "我做了你爱吃的菜，虽然我忘了你爱吃什么。",
+      "我开始存钱了，想买一个带院子的房子。",
+      "我昨天晚上梦见小时候的自己。",
+      "我在路边看到一只很像我的猫。",
+      "我学会了和自己相处。",
+      "我很久没哭了，除了想起你的时候。",
+      "你这次回来，我有点不知所措。",
+      "我好像，已经习惯你不在了。",
+      "但是我还是很高兴你回来。"
+    ],
+    middle: [ // 30-60
+      "你这次回来，我有点认不出你了。",
+      "我的孩子问我，你是谁。",
+      "我好像，慢慢理解你了。",
+      "可是理解，不代表不疼。",
+      "我也有了自己的孩子。",
+      "我给她讲故事的时候，会想起你。",
+      "我曾经恨过你，很多年。",
+      "我梦见你还是年轻的样子。",
+      "我老了，你没老。",
+      "有时候我希望你只是一个普通人。",
+      "我孩子问我，为什么我没有爷爷/奶奶。",
+      "我把你的事，写成了一本小说。",
+      "我去过你以前带我去的地方，什么都没变。",
+      "我开始理解，什么叫'命运'。",
+      "我做了一个梦，梦见你在我小时候的门口站着。",
+      "我孩子说，妈妈/爸爸你笑起来像个小孩子。",
+      "我把你送我的第一件礼物，给女儿看了。",
+      "我搬回了老房子。",
+      "我在阳台上放了两把椅子。",
+      "我不再恨你了，但我也不再等你。",
+      "我有时候想，如果你从来没出现过，我会不会更轻松。",
+      "我照镜子，看到你的眼睛。",
+      "我把你的名字，写在了我女儿的名字里。"
+    ],
+    old: [ // 60+
+      "是你吗…我眼睛不太好了。",
+      "你终于来了。",
+      "我等了你一辈子。",
+      "我不怕死了，因为你来了。",
+      "你还记得我小时候的样子吗？",
+      "我这一生，好像一直在等一个人。",
+      "我床边放着你送我的东西。",
+      "如果你早一点来就好了。",
+      "我没有恨你，真的。",
+      "下辈子，不要再做时间旅行者了。",
+      "我昨天梦见你还是那个样子。",
+      "我孩子说我糊涂了，但我记得你。",
+      "我有很多话，但我说不动了。",
+      "我一直在门口放一盏灯。",
+      "我知道你会来的。",
+      "你来了，我就放心了。",
+      "我这辈子，最不后悔的事，就是被你捡到。",
+      "你走的时候，我还小。",
+      "我这一生，都在等你下一次回来。",
+      "我听见你的脚步声了。",
+      "我可以走了。"
+    ],
+    gone: ["……"]
+  };
+
+  // ===== 人生事件库（按主题分类，大幅扩充） =====
+  const EVENT_POOL = {
+    school: [
+      "她第一次被老师表扬，回家一路都在笑。",
+      "她考了全班第一，但没告诉任何人。",
+      "她参加了作文比赛，写了《我的家人》。",
+      "她在毕业典礼上作为代表发言，眼睛一直看向校门口。",
+      "她考上了一所很远的学校，一个人拖着行李箱去的。",
+      "她第一次逃课，去了海边。",
+      "她的成绩忽上忽下，老师找她谈过话。",
+      "她在图书馆待了一整天，读了一本关于时间的书。",
+      "她收到了录取通知书，在门口站了很久。",
+      "她参加社团，第一次在台上演讲，声音发抖。",
+      "她拿了奖学金，请自己吃了一顿好的。",
+      "她毕业那天，拍了很多照片，但没有一张有家人。"
+    ],
+    work: [
+      "她找到了第一份工作，第一次领工资时买了一束花。",
+      "她第一次升职，请同事吃了饭。",
+      "她加班到很晚，回家路上看到了日出。",
+      "她辞了职，去做了一件自己真正想做的事。",
+      "她开始创业，赔了一些钱，但没哭。",
+      "她学会了在会议上发言，声音不再发抖。",
+      "她被冤枉过一次，但学会了为自己说话。",
+      "她第一次带团队，紧张得一夜没睡。",
+      "她换了一座城市，重新开始。",
+      "她开始存钱，说想买一间带院子的房子。"
+    ],
+    love: [
+      "她第一次喜欢上一个人，但谁也没说。",
+      "她收到了一封情书，不知道该不该回。",
+      "她谈了一场恋爱，最后分手了。",
+      "她遇到了一个对她很好的人。",
+      "她第一次失恋，一个人走了很久。",
+      "她学会了心动，也学会了放下。",
+      "她开始犹豫，要不要开始一段关系。",
+      "她和一个朋友告白了，被拒绝了，但她笑了。",
+      "她遇到一个懂她的人，两个人在一起了。",
+      "她和恋人吵了架，一个人坐在路边哭。",
+      "她第一次带恋人回家，介绍给她的猫。",
+      "她说，她可能不会结婚了。"
+    ],
+    family: [
+      "她开始考虑要孩子。",
+      "她怀孕了，第一次感受到什么叫'等待一个人'。",
+      "她生了一个女儿。",
+      "她给孩子讲了一个关于时间旅行者的故事。",
+      "她在孩子的手腕上，系了一根红绳。",
+      "她的孩子第一次和她顶嘴，她突然理解了你。",
+      "她的孩子考上了大学，离开了家。",
+      "她开始感到空巢的孤独。",
+      "她的孩子结婚了，她在婚礼上哭得像个小孩。",
+      "她开始整理一生的东西。",
+      "她给孩子写了一封信，收件人是'未来的你'。"
+    ],
+    pain: [
+      "她和最好的朋友闹翻了，一个人坐在操场上。",
+      "她第一次觉得，自己可能被抛弃了。",
+      "她在日记里写：'今天我又想他了。'",
+      "她偷偷哭过很多次，不让人听见。",
+      "她第一次生病住院，床边没有人。",
+      "她开始学会一个人吃饭、一个人看电影、一个人过节。",
+      "她把你的照片收进抽屉最深处。",
+      "她在深夜给你写过很多封信，但一封都没寄出去。",
+      "她开始理解，什么叫'遗憾'。",
+      "她去过一次心理咨询，说起你的时候，声音很轻。"
+    ],
+    self: [
+      "她开始写日记，日记本藏在枕头下。",
+      "她开始画画，画的全是天空和门。",
+      "她学会了骑自行车，摔了三次才成功。",
+      "她开始喜欢看星星，说那里有你。",
+      "她开始写小说，主角是一个时间旅行者。",
+      "她学会了自己做饭，第一次煮糊了。",
+      "她捡回过三只猫，都取名叫'小时间'。",
+      "她开始学一门乐器，弹给你听。",
+      "她在阳台上种了一盆花，说等你回来。",
+      "她学会了一个人旅行，去过很多地方。",
+      "她把你的故事讲给了很多人听。",
+      "她开始相信，有些人注定是过客。"
+    ],
+    world: [
+      "她所在的世界的天空，出现了罕见的异象。",
+      "她参加了这个世界的一次盛大节日。",
+      "她读过这个世界最古老的一本书。",
+      "她见过这个世界最著名的一位人物。",
+      "她在这个世界的一个角落，留下了一个标记。",
+      "她曾经想过去寻找时间的裂缝。",
+      "她在这个世界，学会了生存。",
+      "她在这个世界，交到了真正的朋友。",
+      "她在这个世界，失去了一个重要的人。",
+      "她在这个世界，找到了自己的位置。"
+    ]
+  };
+
+  // 按年龄主题权重的映射
+  const AGE_THEMES = {
+    8:  ['school','self','pain'],
+    9:  ['school','self','world'],
+    10: ['school','self','pain'],
+    11: ['school','self','pain'],
+    12: ['school','pain','self'],
+    13: ['school','love','pain','self'],
+    14: ['school','love','pain'],
+    15: ['school','love','self','world'],
+    16: ['school','love','pain','self'],
+    17: ['school','love','pain'],
+    18: ['school','love','self','world'],
+    19: ['school','love','self'],
+    20: ['love','school','self','world'],
+    21: ['work','love','self'],
+    22: ['work','love','pain'],
+    23: ['work','love','family'],
+    24: ['work','love','self'],
+    25: ['love','family','work'],
+    26: ['love','family','work'],
+    27: ['love','family','self'],
+    28: ['family','love','work'],
+    29: ['family','love','self'],
+    30: ['family','work','pain'],
+    31: ['family','pain','self'],
+    32: ['family','work','self'],
+    35: ['family','work','pain'],
+    38: ['family','pain','self'],
+    40: ['family','self','world'],
+    45: ['family','self','pain'],
+    50: ['self','world','pain'],
+    55: ['family','self','pain'],
+    60: ['self','pain','world'],
+    65: ['self','pain','family'],
+    70: ['pain','self','family'],
+    75: ['pain','self','family'],
+    80: ['pain','self','family']
+  };
+
+  // ===== 浪漫性随机剧情 =====
+  const ROMANCE_SCENES = [
+    { id:'graduation', name:'毕业典礼', ageRange:[17,23],
+      text:'你回来的时候，正好赶上她的毕业典礼。她穿着学士服站在人群里，一眼就看到了你。她的眼眶红了，但还是笑着向你挥手。她跑过来，抱住你，说：「你来了。」' },
+    { id:'wedding', name:'她的婚礼', ageRange:[24,35],
+      text:'你回来的时候，正好赶上她的婚礼。她穿着白色的婚纱/礼服，站在门口，宾客名单上有一个空位，上面写着你的名字。她看到你，愣了一秒，然后眼泪掉下来。她说：「你真的来了。」' },
+    { id:'birth', name:'她成为母亲', ageRange:[26,38],
+      text:'你回来的时候，她刚刚生下孩子。她虚弱地躺在床上，怀里抱着一个小小的生命。她看到你，笑了，说：「你看，我也有了自己的孩子。我给她取名叫……明月。」' },
+    { id:'birthday', name:'她的生日', ageRange:[10,70],
+      text:'你回来的时候，正好是她的生日。桌上摆着一个蛋糕，只插了一根蜡烛。她一个人坐在桌边，看到你的时候，先是惊讶，然后笑了，说：「我就知道，你会回来的。」' },
+    { id:'sick', name:'她生病了', ageRange:[30,75],
+      text:'你回来的时候，她正躺在医院的病床上。她瘦了很多，但看到你时，眼睛还是亮的。她轻声说：「我还以为，见不到你了。」' },
+    { id:'book', name:'她的新书发布会', ageRange:[25,50],
+      text:'你回来的时候，她正在开新书发布会。书的名字叫《时间旅行者的女儿》。她在台上说：「这本书，是写给一个人的。他今天可能不会来，但没关系，我已经等习惯了。」' },
+    { id:'grave', name:'她站在一座墓碑前', ageRange:[20,60],
+      text:'你回来的时候，她正站在一座墓碑前。那是她最好的朋友的墓。她轻声说：「你看，她也走了。这个世界，只剩下我一个人在等你了。」' },
+    { id:'reunion', name:'她在老房子门口', ageRange:[30,70],
+      text:'你回来的时候，她正坐在老房子的门口，手里拿着一杯凉掉的茶。她说：「我搬回来了。我想，如果你回来找不到我，会着急的。」' },
+    { id:'letter', name:'她正在写一封信', ageRange:[15,80],
+      text:'你回来的时候，她正伏在桌边写信。信纸上有几处被泪打湿了。她抬头看到你，赶紧把信藏起来，说：「没什么，就是……随便写写。」' },
+    { id:'door', name:'她在画一扇门', ageRange:[8,18],
+      text:'你回来的时候，她正在墙上画一扇门。她画得很认真，连门把手都画出来了。她说：「我从这里画一扇门，你以后从这扇门回来，好不好？」' },
+    { id:'concert', name:'她的演奏会', ageRange:[15,45],
+      text:'你回来的时候，正好赶上她的演奏会。她坐在台上，手指落在琴键上，音乐响起的那一刻，她抬头看了一眼观众席。她在找你。' },
+    { id:'kitchen', name:'她在厨房做饭', ageRange:[20,70],
+      text:'你回来的时候，她正在厨房做饭。锅里煮着你爱吃的菜——虽然她其实不记得你爱吃什么。她回头看见你，愣了一下，说：「我多摆了一副碗筷。」' }
+  ];
+
+  // ===== 信件库（按年龄 + 取向分支） =====
+  const LETTERS = {
+    child: [
+      "{P}：\n你什么时候回来呀？\n我把画贴在墙上了。\n我数学考了 100 分，老师说我很棒。\n——{N}",
+      "{P}：\n今天是我的生日。\n我许了一个愿望，但不告诉你。\n——{N}",
+      "{P}：\n我做了一个梦，梦见你回来了。\n醒来的时候，枕头是湿的。\n——{N}",
+      "{P}：\n我在门口画了一个'正'字。\n你不在的日子，我就画一笔。\n——{N}",
+      "{P}：\n我今天看到一个和你很像的人。\n我跟了很久，发现不是。\n——{N}"
+    ],
+    teen: [
+      "{P}：\n我已经长大了。\n有些事情，我自己能决定了。\n你不用再管我了。\n——{N}",
+      "{P}：\n我讨厌你。\n我讨厌你每次都走得那么突然。\n但我还是想告诉你，我考上了重点高中。\n——{N}",
+      "{P}：\n今天有人问我，我爸爸/妈妈是什么样的人。\n我说，我忘了。\n其实我没忘。\n——{N}",
+      "{P}：\n我把你送我的东西，全收进箱子里了。\n但我没扔。\n——{N}",
+      "{P}：\n我有时候会想，如果我不是被你捡到，\n我现在会在哪里。\n会不会，更幸福一点。\n——{N}"
+    ],
+    adult: [
+      "{P}：\n我今天结婚了。\n我在宾客席留了一个空位。\n我知道你不会来，但万一呢。\n——{N}",
+      "{P}：\n我有了一份工作。\n第一次领工资的时候，我买了你爱喝的茶。\n放在桌上，后来坏了。\n——{N}",
+      "{P}：\n我遇到了一个人。\n他对我很好。\n我想，我可能要开始新的生活了。\n——{N}",
+      "{P}：\n我搬了新家。\n我在阳台上放了两把椅子。\n一把是我的，一把是给你的。\n——{N}",
+      "{P}：\n我今天在街上，看到一个背影很像你的人。\n我跟着走了三条街。\n——{N}"
+    ],
+    adult_ace: [
+      "{P}：\n我没有结婚。\n不是因为没有遇到人，\n是因为我觉得，一个人也很好。\n——{N}",
+      "{P}：\n我养了三只猫。\n它们都叫'小时间'。\n我想，这样就够了。\n——{N}",
+      "{P}：\n我搬进了自己的小房子。\n院子里有一棵会开花的树。\n我一个人，也很好。\n——{N}"
+    ],
+    adult_homo: [
+      "{P}：\n我爱上了一个女孩/男孩。\n她对我很好。\n我想，我终于知道，什么是'家'了。\n——{N}",
+      "{P}：\n我和她在一起了。\n我们没有办婚礼，但我们很幸福。\n——{N}",
+      "{P}：\n她问我，我的家人是什么样的人。\n我说，我只有一个爸爸/妈妈。\n他是一个时间旅行者。\n——{N}"
+    ],
+    middle: [
+      "{P}：\n我有了自己的孩子。\n她问我，外公/外婆是什么样的人。\n我说，你是一个时间旅行者。\n她问，那你什么时候回来？\n我没有回答。\n——{N}",
+      "{P}：\n我老了。\n我照镜子的时候，看到你的影子。\n我好像终于理解你了。\n——{N}",
+      "{P}：\n我搬回了小时候住的地方。\n房子已经拆了，但我还是站了很久。\n——{N}",
+      "{P}：\n我把你的故事，写成了一本书。\n书里你回来了，而且再也没有走。\n——{N}",
+      "{P}：\n我在阳台上坐了一整夜。\n我在想，你现在在哪一年。\n——{N}"
+    ],
+    old: [
+      "{P}：\n我老了。\n我的头发白了，眼睛也不好了。\n但我还记得你的样子。\n——{N}",
+      "{P}：\n我这一生，好像一直在等一个人。\n我不知道你会不会来。\n但我还是等了。\n——{N}",
+      "{P}：\n我没有恨你，真的。\n我只是想问你一句：\n你爱我吗？\n——{N}",
+      "{P}：\n我床边放着你送我的东西。\n每天晚上，我都会看一眼。\n——{N}",
+      "{P}：\n我梦见你还是我 8 岁那年的样子。\n你伸出手，说：'跟我走。'\n我跟着你走了。\n——{N}"
+    ]
+  };
+
+  // ===== 命运干涉选择（30 道） =====
+  const CHOICES = [
+    { minAge: 9, maxAge: 13,
+      q: "她问你：「班上有成绩不好的同学想和我做朋友，你觉得可以吗？」",
+      a: { text:"「当然可以，成绩不代表一切。」", effect:{ desc:'她学会了善良' }, flags:{ kind:1 } },
+      b: { text:"「还是和成绩好的同学玩吧。」", effect:{ desc:'她学会了现实' }, flags:{ prag:1 } } },
+    { minAge: 10, maxAge: 14,
+      q: "她说：「我不想学钢琴了，我想画画。」",
+      a: { text:"「那就不学了，做你喜欢的。」", effect:{ desc:'她学会了自由' }, flags:{ free:1 } },
+      b: { text:"「再坚持一下，以后你会感谢我。」", effect:{ desc:'她学会了坚持' }, flags:{ persist:1 } } },
+    { minAge: 12, maxAge: 16,
+      q: "她说：「我成绩下降了，你失望吗？」",
+      a: { text:"「不失望，你已经很努力了。」", effect:{ desc:'她学会了被接纳' }, flags:{ accept:1 } },
+      b: { text:"「再努力一点，你可以更好。」", effect:{ desc:'她学会了压力' }, flags:{ press:1 } } },
+    { minAge: 14, maxAge: 18,
+      q: "她收到了一封情书，问你：「我应该答应吗？」",
+      a: { text:"「你自己决定，我支持你。」", effect:{ desc:'她学会了信任自己' }, flags:{ trust:1 } },
+      b: { text:"「先专心学业，别分心。」", effect:{ desc:'她学会了克制' }, flags:{ focus:1 } } },
+    { minAge: 16, maxAge: 20,
+      q: "她说：「我想去很远的城市读大学。」",
+      a: { text:"「去吧，世界很大。」", effect:{ desc:'她学会了远行' }, flags:{ brave:1 } },
+      b: { text:"「离家近一点，我会担心。」", effect:{ desc:'她学会了牵挂' }, flags:{ home:1 } } },
+    { minAge: 20, maxAge: 24,
+      q: "她说：「有一个工作机会，但和我的专业不对口。」",
+      a: { text:"「试试看，人生不一定按计划走。」", effect:{ desc:'她学会了冒险' }, flags:{ risk:1 } },
+      b: { text:"「还是做你擅长的吧。」", effect:{ desc:'她学会了稳妥' }, flags:{ safe:1 } } },
+    { minAge: 22, maxAge: 28,
+      q: "她说：「我恋爱了，但对方家里条件不太好。」",
+      a: { text:"「只要他对你好就行。」", effect:{ desc:'她学会了爱' }, flags:{ love:1 } },
+      b: { text:"「现实一点，以后会吃苦。」", effect:{ desc:'她学会了现实' }, flags:{ reality:1 } } },
+    { minAge: 25, maxAge: 32,
+      q: "她说：「我可能要结婚了，你会来吗？」",
+      a: { text:"「我会尽量。」", effect:{ desc:'她留了一个希望' }, flags:{ hope:1 } },
+      b: { text:"「我可能来不了。」", effect:{ desc:'她学会了接受' }, flags:{ acceptNo:1 } } },
+    { minAge: 28, maxAge: 35,
+      q: "她说：「我想辞职，去做一件自己真正想做的事。」",
+      a: { text:"「去做吧，人生只有一次。」", effect:{ desc:'她学会了勇敢' }, flags:{ dream:1 } },
+      b: { text:"「再想想，稳定最重要。」", effect:{ desc:'她学会了妥协' }, flags:{ stable:1 } } },
+    { minAge: 32, maxAge: 40,
+      q: "她说：「我的孩子问我，你是谁。我该怎么回答？」",
+      a: { text:"「告诉她真相吧。」", effect:{ desc:'她学会了坦率' }, flags:{ truth:1 } },
+      b: { text:"「就说，我是一个远方的亲人。」", effect:{ desc:'她学会了保护' }, flags:{ protect:1 } } },
+    { minAge: 40, maxAge: 50,
+      q: "她说：「我开始理解你了，但我还是想问，为什么？」",
+      a: { text:"「因为我必须去。对不起。」", effect:{ desc:'她学会了原谅' }, flags:{ forgive:1 } },
+      b: { text:"「这是我的使命，我没办法。」", effect:{ desc:'她学会了接受命运' }, flags:{ fate:1 } } },
+    { minAge: 50, maxAge: 65,
+      q: "她说：「我老了。你还会来看我吗？」",
+      a: { text:"「会。我会一直来。」", effect:{ desc:'她感到被爱' }, flags:{ promise:1 } },
+      b: { text:"「我不知道。时间不由我控制。」", effect:{ desc:'她感到无力' }, flags:{ helpless:1 } } },
+    { minAge: 10, maxAge: 16,
+      q: "她说：「同学嘲笑我没有妈妈/爸爸。」",
+      a: { text:"「你不用解释，你是我的孩子。」", effect:{ desc:'她学会了骄傲' }, flags:{ proud:1 } },
+      b: { text:"「别理他们，做好自己就行。」", effect:{ desc:'她学会了沉默' }, flags:{ silent:1 } } },
+    { minAge: 12, maxAge: 18,
+      q: "她说：「我想改名字。」",
+      a: { text:"「你想叫什么，都可以。」", effect:{ desc:'她学会了自主' }, flags:{ auto:1 } },
+      b: { text:"「这个名字是我给你取的，别改。」", effect:{ desc:'她学会了顺从' }, flags:{ obey:1 } } },
+    { minAge: 14, maxAge: 20,
+      q: "她说：「我想去找我的亲生父母。」",
+      a: { text:"「去吧，我支持你。」", effect:{ desc:'她学会了追寻' }, flags:{ seek:1 } },
+      b: { text:"「我就是你的家人，不需要找别人。」", effect:{ desc:'她学会了依赖' }, flags:{ depend:1 } } },
+    { minAge: 16, maxAge: 22,
+      q: "她说：「我想纹身。」",
+      a: { text:"「你想纹什么？」", effect:{ desc:'她学会了自由' }, flags:{ free2:1 } },
+      b: { text:"「等你再大一点。」", effect:{ desc:'她学会了等待' }, flags:{ wait:1 } } },
+    { minAge: 18, maxAge: 26,
+      q: "她说：「我好像喜欢上了一个同性。」",
+      a: { text:"「喜欢就好，我尊重你。」", effect:{ desc:'她学会了被接纳' }, flags:{ acceptLove:1 } },
+      b: { text:"「你再想想，是不是误会。」", effect:{ desc:'她学会了隐藏' }, flags:{ hide:1 } } },
+    { minAge: 20, maxAge: 30,
+      q: "她说：「我不想结婚，也不想生孩子。」",
+      a: { text:"「你的人生，你自己决定。」", effect:{ desc:'她学会了自我' }, flags:{ self:1 } },
+      b: { text:"「以后你会后悔的。」", effect:{ desc:'她学会了怀疑' }, flags:{ doubt:1 } } },
+    { minAge: 22, maxAge: 32,
+      q: "她说：「我好像，不再期待你回来了。」",
+      a: { text:"「没关系，我理解。」", effect:{ desc:'她学会了释然' }, flags:{ release:1 } },
+      b: { text:"「我会努力多回来的。」", effect:{ desc:'她留了一丝希望' }, flags:{ hope2:1 } } },
+    { minAge: 25, maxAge: 38,
+      q: "她说：「我怀孕了，但我不确定要不要这个孩子。」",
+      a: { text:"「无论你怎么选，我都支持你。」", effect:{ desc:'她学会了被支持' }, flags:{ support:1 } },
+      b: { text:"「孩子是上天给的礼物。」", effect:{ desc:'她学会了压力' }, flags:{ press2:1 } } },
+    { minAge: 30, maxAge: 45,
+      q: "她说：「我离婚了。」",
+      a: { text:"「你还好吗？我在这儿。」", effect:{ desc:'她学会了依靠' }, flags:{ rely:1 } },
+      b: { text:"「早知如此，当初就该听我的。」", effect:{ desc:'她学会了封闭' }, flags:{ close:1 } } },
+    { minAge: 35, maxAge: 50,
+      q: "她说：「我恨过你很多年。」",
+      a: { text:"「对不起，让你一个人长大。」", effect:{ desc:'她学会了原谅' }, flags:{ forgive2:1 } },
+      b: { text:"「我也是身不由己。」", effect:{ desc:'她学会了接受' }, flags:{ acceptFate:1 } } },
+    { minAge: 40, maxAge: 55,
+      q: "她说：「你会不会有一天，永远不回来了？」",
+      a: { text:"「不会。我总会回来的。」", effect:{ desc:'她感到安心' }, flags:{ reassure:1 } },
+      b: { text:"「我不知道。但我会尽力。」", effect:{ desc:'她学会了不确定' }, flags:{ unsure:1 } } },
+    { minAge: 45, maxAge: 60,
+      q: "她说：「我想去旅行，一个人。」",
+      a: { text:"「去吧，替我看看这个世界。」", effect:{ desc:'她学会了远行' }, flags:{ travel:1 } },
+      b: { text:"「你一个人，我不放心。」", effect:{ desc:'她学会了牵挂' }, flags:{ worry:1 } } },
+    { minAge: 50, maxAge: 65,
+      q: "她说：「我开始忘记很多事了。」",
+      a: { text:"「没关系，我替你记得。」", effect:{ desc:'她感到被爱' }, flags:{ remember:1 } },
+      b: { text:"「你要多注意身体。」", effect:{ desc:'她学会了担忧' }, flags:{ health:1 } } },
+    { minAge: 55, maxAge: 70,
+      q: "她说：「我梦见了小时候的自己。」",
+      a: { text:"「她一直在等你回来。」", effect:{ desc:'她学会了温柔' }, flags:{ tender:1 } },
+      b: { text:"「那都是过去的事了。」", effect:{ desc:'她学会了放下' }, flags:{ letgo:1 } } },
+    { minAge: 60, maxAge: 75,
+      q: "她说：「我好像，快要走了。」",
+      a: { text:"「我会陪着你。」", effect:{ desc:'她感到被陪伴' }, flags:{ accompany:1 } },
+      b: { text:"「不会的，你会好起来的。」", effect:{ desc:'她学会了安慰' }, flags:{ comfort:1 } } },
+    { minAge: 8, maxAge: 12,
+      q: "她说：「我可以叫你爸爸/妈妈吗？」",
+      a: { text:"「当然可以。」", effect:{ desc:'她学会了归属' }, flags:{ belong:1 } },
+      b: { text:"「叫我名字就好。」", effect:{ desc:'她学会了距离' }, flags:{ distance:1 } } },
+    { minAge: 15, maxAge: 22,
+      q: "她说：「我想去你说的那些世界看看。」",
+      a: { text:"「等你长大了，我带你一起去。」", effect:{ desc:'她学会了期待' }, flags:{ expect:1 } },
+      b: { text:"「那些地方很危险，别去。」", effect:{ desc:'她学会了克制' }, flags:{ restraint:1 } } },
+    { minAge: 28, maxAge: 40,
+      q: "她说：「我开始写一本关于你的书。」",
+      a: { text:"「写吧，把我们的故事写下来。」", effect:{ desc:'她学会了记录' }, flags:{ record:1 } },
+      b: { text:"「别写了，那都是过去的事。」", effect:{ desc:'她学会了封存' }, flags:{ seal:1 } } }
+  ];
+
+  let state = null;
+  let tickerId = null;
+
+  const $ = id => document.getElementById(id);
+  const introPanel=$('introPanel'), mainPanel=$('mainPanel'), missionPanel=$('missionPanel'), returnPanel=$('returnPanel');
+  const girlEmoji=$('girlEmoji'), girlName=$('girlName'), girlAge=$('girlAge'), speechEl=$('speech');
+  const playerTrips=$('playerTrips'), ageVal=$('ageVal'), meetCount=$('meetCount');
+  const attachVal=$('attachVal'), strangeVal=$('strangeVal'), resentVal=$('resentVal');
+  const attachDesc=$('attachDesc'), strangeDesc=$('strangeDesc'), resentDesc=$('resentDesc');
+  const traitsArea=$('traitsArea'), worldBox=$('worldBox');
+  const speedGrid=$('speedGrid'), travelBtn=$('travelBtn'), resetBtn=$('resetBtn');
+  const gameArea=$('gameArea'), endingArea=$('endingArea');
+
+  function rand(a){ return a[Math.floor(Math.random()*a.length)]; }
+  function randInt(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+  function pickN(arr, n){
+    const c = arr.slice();
+    const out = [];
+    for(let i=0;i<n && c.length;i++){
+      out.push(c.splice(Math.floor(Math.random()*c.length),1)[0]);
+    }
+    return out;
+  }
+  function title(){ return state.role==='father'?'爸爸':'妈妈'; }
+
+  function descAttach(v){
+    if(v>=85) return '你是她的全部';
+    if(v>=65) return '她深深爱着你';
+    if(v>=45) return '她把你放在心上';
+    if(v>=25) return '她还在意你';
+    if(v>=10) return '她偶尔想起你';
+    return '她几乎忘了你';
+  }
+  function descStrange(v){
+    if(v>=85) return '她已认不出你';
+    if(v>=65) return '你对她像个陌生人';
+    if(v>=45) return '她对你有些疏远';
+    if(v>=25) return '她对你还有点距离';
+    if(v>=10) return '她记得你的样子';
+    return '你对她无比熟悉';
+  }
+  function descResent(v){
+    if(v>=85) return '她恨了你一生';
+    if(v>=65) return '她心里有很深的怨';
+    if(v>=45) return '她对你有些埋怨';
+    if(v>=25) return '她偶尔会怨你';
+    if(v>=10) return '她有一点点不满';
+    return '她从不怪你';
+  }
+
+  function initState(){
+    return {
+      role:'father',
+      named:false,
+      name:'明月',
+      ageMonths: 8*12,
+      targetAgeMonths: 0,
+      playerTrips: 0,
+      meetings: 0,
+      memories: [],
+      alive: true,
+      aliveYears: 0,
+      speed: 'y3',
+      introDone: false,
+      ended: false,
+      // 任务
+      missionStartReal: 0,
+      missionAccumulated: 0,
+      missionRunning: false,
+      missionRunningSince: 0,
+      missionYears: 0,
+      missionMinutes: 0,
+      missionTargetSeconds: 0,
+      // 感情
+      attachment: 0,
+      strangeness: 0,
+      resentment: 0,
+      // 性格
+      personality: null,
+      hobby: null,
+      orientation: null,
+      world: null,
+      // 选择
+      choicesMade: [],
+      flags: {},
+      lifelog: [],
+      letters: [],
+      pendingChoice: null,
+      choiceResult: null,
+      romanceSeen: [],
+      timeline: []
+    };
+  }
+
+  function ageYears(){ return state.ageMonths / 12; }
+  function ageText(){
+    const m = state.ageMonths;
+    if(m < 12) return Math.floor(m) + ' 个月';
+    const y = m/12;
+    if(y < 3) return y.toFixed(1) + ' 岁';
+    return Math.floor(y) + ' 岁';
+  }
+  function getStage(){
+    if(!state.alive) return 'gone';
+    const y = ageYears();
+    if(y < 12) return 'child';
+    if(y < 18) return 'teen';
+    if(y < 30) return 'adult';
+    if(y < 60) return 'middle';
+    return 'old';
+  }
+  function getEmoji(){
+    if(!state.alive) return '⚱️';
+    const y = ageYears();
+    if(y < 12) return '👧';
+    if(y < 18) return '👩';
+    if(y < 30) return '👩‍🦰';
+    if(y < 60) return '👩‍🦳';
+    return '👵';
+  }
+  function addLog(t){ state.lifelog.unshift(t); if(state.lifelog.length>120) state.lifelog.pop(); }
+  function addMemory(t){ state.memories.push(t); if(state.memories.length>60) state.memories.shift(); }
+  function addTimeline(t){ state.timeline.push(t); if(state.timeline.length>40) state.timeline.shift(); }
+
+  function render(){
+    if(mainPanel.classList.contains('hidden')) return;
+    girlEmoji.textContent = getEmoji();
+    girlName.textContent = state.name;
+    girlAge.textContent = state.alive ? '她 '+ageText() : '她已经不在了';
+    playerTrips.textContent = '第 '+(state.playerTrips+1)+' 次';
+    ageVal.textContent = state.alive ? ageText() : '—';
+    meetCount.textContent = state.meetings+' 次';
+    attachVal.textContent = Math.floor(state.attachment);
+    strangeVal.textContent = Math.floor(state.strangeness);
+    resentVal.textContent = Math.floor(state.resentment);
+    attachDesc.textContent = descAttach(state.attachment);
+    strangeDesc.textContent = descStrange(state.strangeness);
+    resentDesc.textContent = descResent(state.resentment);
+
+    let sp;
+    if(!state.alive) sp = '……她留下的，只有一封信。';
+    else sp = rand(SPEECH[getStage()]);
+    speechEl.textContent = sp;
+
+    // 世界观展示
+    if(state.world){
+      worldBox.innerHTML = `
+        <div class="worldTag">🌍 她所在的世界</div>
+        <div class="worldName">${state.world.emoji} ${state.world.name}</div>
+        <div class="worldDesc">${state.world.desc}</div>
+      `;
+    } else {
+      worldBox.innerHTML = '';
+    }
+
+    speedGrid.innerHTML = '';
+    SPEEDS.forEach(s=>{
+      const d = document.createElement('div');
+      d.className = 'speedItem' + (state.speed===s.id?' active':'');
+      d.innerHTML = `<div class="sp">${s.label}</div><div class="lb">${s.desc}</div>`;
+      d.addEventListener('click', ()=>{ state.speed = s.id; render(); });
+      speedGrid.appendChild(d);
+    });
+
+    const p = state.personality, h = state.hobby, o = state.orientation;
+    let orientExtra = '';
+    if(o && o.id==='ace') orientExtra = '（她不会结婚生子）';
+    if(o && o.id==='homo') orientExtra = '（她会有同性伴侣）';
+    if(o && o.id==='bi') orientExtra = '（她可能和任何性别在一起）';
+    traitsArea.innerHTML = `
+      <div class="traitRow"><span>性格</span><span class="v">${p?p.name:'—'}</span></div>
+      <div class="traitRow"><span>爱好</span><span class="v">${h?h.name:'—'}</span></div>
+      <div class="traitRow"><span>取向</span><span class="v">${o?o.name:'—'}</span></div>
+      <div style="font-size:11px;color:#818cf8;margin-top:4px;">
+        ${p?p.desc:''} ${h?'· '+h.desc:''} ${orientExtra}
+      </div>
+    `;
+  }
+
+  // ===== 开场 =====
+  function showIntro(){
+    mainPanel.classList.add('hidden');
+    missionPanel.classList.add('hidden');
+    returnPanel.classList.add('hidden');
+    introPanel.classList.remove('hidden');
+
+    introPanel.innerHTML = `
+      <div class="card fadeIn">
+        <div class="bigEmoji">🌌</div>
+        <div class="storyText">你是时间旅行者。<br>你能穿行于时间的裂缝之间，<br>看尽王朝覆灭、星辰陨落。</div>
+      </div>
+      <div class="card fadeIn">
+        <div class="storyText">那天，你在一条时间的裂隙里，<br>听见了哭声。</div>
+      </div>
+      <div class="card fadeIn">
+        <div class="bigEmoji">👧</div>
+        <div class="storyText">一个孩子。<br>她被时间遗弃了，<br>不知道自己属于哪个时代，<br>也不知道自己是谁。<br><br>她看起来，大约 8 岁。</div>
+      </div>
+      <div class="card fadeIn">
+        <div class="storyText">你伸出手。<br>她犹豫了一下，<br>还是握住了。</div>
+        <div class="quote">"从今天起，你就是我的孩子了。"</div>
+      </div>
+      <div class="card fadeIn">
+        <div class="storyText">你带她回家。<br>给她买了柔软的床、漂亮的裙子、很多书。<br>可是你终究是时间旅行者，<br>你必须经常离开。<br>你要去完成你的任务。</div>
+      </div>
+      <div class="card fadeIn">
+        <div class="storyText" style="font-size:15px;color:#fbbf24;">先告诉我，你是谁？</div>
+        <div class="roleGrid" id="roleGrid">
+          <div class="roleItem" data-role="father"><div class="ico">👨</div><div class="nm">父亲</div></div>
+          <div class="roleItem" data-role="mother"><div class="ico">👩</div><div class="nm">母亲</div></div>
+        </div>
+      </div>
+      <div class="card fadeIn" id="nameCard" style="display:none;">
+        <div class="storyText" style="font-size:15px;color:#fbbf24;">给她起一个名字</div>
+        <input class="nameInput" id="nameInput" value="明月" maxlength="8" autocomplete="off">
+        <button class="btn gold" id="nameBtn" style="margin-top:12px;">就叫这个名字</button>
+      </div>
+    `;
+
+    const roleGrid = $('roleGrid');
+    const nameCard = $('nameCard');
+    roleGrid.querySelectorAll('.roleItem').forEach(it=>{
+      it.addEventListener('click', ()=>{
+        roleGrid.querySelectorAll('.roleItem').forEach(x=>x.classList.remove('active'));
+        it.classList.add('active');
+        state.role = it.dataset.role;
+        nameCard.style.display = 'block';
+        setTimeout(()=>$('nameInput').focus(), 200);
+      });
+    });
+
+    $('nameBtn').addEventListener('click', ()=>{
+      const n = $('nameInput').value.trim() || '明月';
+      state.name = n;
+      state.named = true;
+      state.introDone = true;
+      state.personality = rand(PERSONALITIES);
+      state.hobby = rand(HOBBIES);
+      state.orientation = rand(ORIENTATIONS);
+      state.world = rand(WORLDS);
+
+      addLog('你（'+title()+'）收养了她，取名「'+n+'」。那年她 8 岁。');
+      addMemory('你收养了「'+n+'」，那年她 8 岁。');
+      addLog('她是一个'+state.personality.name+'的孩子，喜欢'+state.hobby.name+'。');
+      addLog('她所在的世界是：'+state.world.name+'。');
+      addTimeline('8 岁 · 你收养了她');
+
+      introPanel.classList.add('hidden');
+      mainPanel.classList.remove('hidden');
+      render();
+      save();
+    });
+  }
+
+  // ===== 启程离开 =====
+  function travel(){
+    if(!state.named){ showIntro(); return; }
+    if(!state.alive){ showEnding(); return; }
+    if(state.ended) return;
+
+    const speed = SPEEDS.find(s=>s.id===state.speed);
+    state.playerTrips++;
+    state.missionYears = speed.years;
+    state.missionTargetSeconds = speed.years * SECONDS_PER_YEAR;
+    state.missionAccumulated = 0;
+    state.missionRunning = false;
+    state.targetAgeMonths = state.ageMonths + speed.years * 12;
+
+    save();
+    showMission();
+  }
+
+  // ===== 任务界面 =====
+  function showMission(){
+    mainPanel.classList.add('hidden');
+    returnPanel.classList.add('hidden');
+    missionPanel.classList.remove('hidden');
+
+    const totalMin = Math.ceil(state.missionTargetSeconds / 60);
+
+    missionPanel.innerHTML = `
+      <div class="card fadeIn">
+        <div class="missionBox">
+          <div class="missionTitle">⏳ 你要去完成任务了</div>
+          <div class="missionNote">
+            你有自己的使命，必须离开。去专注做事吧。<br>
+            这段时间里，她也在长大。<br>
+            <b style="color:#fbbf24;">需要累计专注 ${totalMin} 分钟</b>，她才会长大 ${state.missionYears} 岁。<br>
+            中途有事可以按暂停，回来再继续。<br>
+            <span style="color:#a78bfa;">切走 App、锁屏、关掉页面，计时都会继续。</span>
+          </div>
+          <div id="mStatusTag" class="statusTag paused">⏸ 已暂停</div>
+          <div class="missionTime" id="mTime">00:00</div>
+          <div class="missionSub" id="mSub">她正在等你回来…</div>
+          <div class="progressOuter">
+            <div class="progressInner" id="mProgress" style="width:0%"></div>
+          </div>
+          <div class="missionInfo" id="mInfo"></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;">
+        <button class="btn gold" id="startMissionBtn" style="flex:1;">▶ 开始专注</button>
+        <button class="btn ghost" id="pauseMissionBtn" style="flex:1;">⏹ 暂停</button>
+      </div>
+      <button class="btn danger small" id="cancelMissionBtn">↩ 返回（放弃这次离开）</button>
+    `;
+
+    $('startMissionBtn').addEventListener('click', startMissionTick);
+    $('pauseMissionBtn').addEventListener('click', pauseMissionTick);
+    $('cancelMissionBtn').addEventListener('click', cancelMission);
+
+    updateMissionDisplay();
+    if(state.missionRunning){
+      startMissionTick();
+    }
+  }
+
+  function startMissionTick(){
+    if(state.missionRunning) return;
+    state.missionRunning = true;
+    state.missionRunningSince = Date.now();
+    if(tickerId) clearInterval(tickerId);
+    tickerId = setInterval(tickMission, 1000);
+    updateMissionDisplay();
+    save();
+  }
+
+  function pauseMissionTick(){
+    if(state.missionRunning && state.missionRunningSince){
+      const now = Date.now();
+      const dt = (now - state.missionRunningSince) / 1000;
+      state.missionAccumulated += dt;
+    }
+    state.missionRunning = false;
+    state.missionRunningSince = 0;
+    if(tickerId){ clearInterval(tickerId); tickerId = null; }
+    updateMissionDisplay();
+    save();
+  }
+
+  function cancelMission(){
+    if(!confirm('放弃这次离开？你还没开始专注，不会有任何变化。')) return;
+    if(tickerId){ clearInterval(tickerId); tickerId = null; }
+    state.missionRunning = false;
+    state.missionRunningSince = 0;
+    state.missionAccumulated = 0;
+    state.missionTargetSeconds = 0;
+    state.missionYears = 0;
+    state.playerTrips = Math.max(0, state.playerTrips - 1);
+    save();
+    missionPanel.classList.add('hidden');
+    mainPanel.classList.remove('hidden');
+    render();
+  }
+
+  function tickMission(){
+    if(!state.missionRunning) return;
+    const now = Date.now();
+    const dt = (now - state.missionRunningSince) / 1000;
+    state.missionRunningSince = now;
+    state.missionAccumulated += dt;
+    updateMissionDisplay();
+
+    if(state.missionAccumulated >= state.missionTargetSeconds){
+      state.missionAccumulated = state.missionTargetSeconds;
+      pauseMissionTick();
+      finishMission();
+    }
+  }
+
+  function updateMissionDisplay(){
+    const mTime = $('mTime');
+    const mProgress = $('mProgress');
+    const mSub = $('mSub');
+    const mInfo = $('mInfo');
+    const mTag = $('mStatusTag');
+    if(!mTime) return;
+
+    const total = state.missionTargetSeconds;
+    const elapsed = Math.min(state.missionAccumulated, total);
+    const remain = Math.max(0, total - elapsed);
+
+    const mm = Math.floor(remain/60);
+    const ss = Math.floor(remain%60);
+    mTime.textContent = String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0');
+
+    const pct = Math.min(100, (elapsed/total)*100);
+    mProgress.style.width = pct+'%';
+
+    const curMonths = state.ageMonths + (elapsed/total) * state.missionYears * 12;
+    mSub.textContent = '她正在长大… ' + Math.floor(curMonths/12) + ' 岁';
+
+    if(state.missionRunning){
+      mTag.textContent = '▶ 专注中';
+      mTag.className = 'statusTag running';
+    } else {
+      mTag.textContent = '⏸ 已暂停';
+      mTag.className = 'statusTag paused';
+    }
+
+    mInfo.innerHTML = `你离开后，她将度过 <b style="color:#fbbf24;">${state.missionYears} 年</b>。<br>
+      她会从 <b style="color:#fbbf24;">${ageText()}</b> 长到 <b style="color:#fbbf24;">${Math.floor(state.targetAgeMonths/12)} 岁</b>。`;
+  }
+
+  // ===== 完成 =====
+  function finishMission(){
+    if(tickerId){ clearInterval(tickerId); tickerId = null; }
+    state.missionRunning = false;
+    state.missionRunningSince = 0;
+
+    const years = state.missionYears;
+    const startAge = state.ageMonths / 12;
+    state.ageMonths = state.targetAgeMonths;
+    const endAge = state.ageMonths / 12;
+    state.meetings++;
+
+    // 感情变化
+    if(years <= 3){
+      state.attachment += 10;
+      state.strangeness -= 4;
+      state.resentment -= 2;
+    } else if(years <= 5){
+      state.attachment += 5;
+      state.strangeness += 1;
+      state.resentment -= 1;
+    } else if(years <= 10){
+      state.attachment += 1;
+      state.strangeness += 8;
+      state.resentment += 4;
+    } else if(years <= 20){
+      state.attachment -= 4;
+      state.strangeness += 15;
+      state.resentment += 10;
+    } else {
+      state.attachment -= 10;
+      state.strangeness += 28;
+      state.resentment += 22;
+    }
+
+    if(endAge <= 12) state.attachment += 6;
+    else if(endAge <= 18) state.attachment += 3;
+
+    state.attachment = Math.max(0, Math.min(100, state.attachment));
+    state.strangeness = Math.max(0, Math.min(100, state.strangeness));
+    state.resentment = Math.max(0, Math.min(100, state.resentment));
+
+    if(state.ageMonths / 12 >= 85){
+      state.alive = false;
+      state.aliveYears = state.ageMonths / 12;
+    }
+
+    const events = generateLifeEvents(years, endAge, startAge);
+    events.forEach(e=> addLog(e.age + '：' + e.text));
+
+    const letter = generateLetter(endAge);
+    if(letter) state.letters.push(letter);
+
+    const choice = pickChoice(startAge, endAge);
+    if(choice && !state.choicesMade.includes(choice.q)){
+      state.pendingChoice = choice;
+      state.choicesMade.push(choice.q);
+    }
+
+    addMemory('第'+state.playerTrips+'次离开：她 '+Math.floor(startAge)+'→'+Math.floor(endAge)+' 岁。');
+    addTimeline(Math.floor(endAge)+' 岁 · 你第'+state.playerTrips+'次归来');
+
+    // 浪漫剧情判定
+    let romance = null;
+    if(state.alive && endAge >= 10){
+      const candidates = ROMANCE_SCENES.filter(r =>
+        endAge >= r.ageRange[0] && endAge <= r.ageRange[1] &&
+        !state.romanceSeen.includes(r.id)
+      );
+      if(candidates.length && Math.random() < 0.6){
+        romance = rand(candidates);
+        state.romanceSeen.push(romance.id);
+        addMemory('浪漫瞬间：'+romance.name);
+      }
+    }
+
+    save();
+
+    if(state.pendingChoice){
+      state._romanceForChoice = romance;
+      state._eventsForChoice = events;
+      state._letterForChoice = letter;
+      showChoice();
+    } else {
+      showReturn(years, endAge, events, letter, null, romance);
+    }
+  }
+
+  // ===== 选择 =====
+  function pickChoice(startAge, endAge){
+    for(const c of CHOICES){
+      if(endAge >= c.minAge && endAge <= c.maxAge && startAge <= c.maxAge){
+        if(!state.choicesMade.includes(c.q)) return c;
+      }
+    }
+    return null;
+  }
+
+  function showChoice(){
+    const c = state.pendingChoice;
+    mainPanel.classList.add('hidden');
+    missionPanel.classList.add('hidden');
+    returnPanel.classList.remove('hidden');
+
+    returnPanel.innerHTML = `
+      <div class="card fadeIn">
+        <div class="bigEmoji">💭</div>
+        <div class="storyText" style="font-size:15px;color:#fbbf24;">你回来的时候，她问了你一个问题。</div>
+      </div>
+      <div class="card fadeIn">
+        <div class="choiceBox">
+          <div class="choiceQ">「${c.q}」</div>
+          <button class="choiceBtn" id="choiceA">
+            ${c.a.text}
+            <div class="choiceEffect">→ ${c.a.effect.desc}</div>
+          </button>
+          <button class="choiceBtn" id="choiceB">
+            ${c.b.text}
+            <div class="choiceEffect">→ ${c.b.effect.desc}</div>
+          </button>
+        </div>
+      </div>
+    `;
+
+    $('choiceA').addEventListener('click', ()=>makeChoice(c.a, c));
+    $('choiceB').addEventListener('click', ()=>makeChoice(c.b, c));
+  }
+
+  function makeChoice(opt, c){
+    Object.assign(state.flags, opt.flags || {});
+    addLog('你选择了：' + opt.text);
+    addMemory('她问「'+c.q+'」，你说「'+opt.text+'」。');
+
+    // 统一处理 flag 数值影响
+    const f = opt.flags || {};
+    const attachUp = ['kind','accept','trust','love','hope','dream','truth','promise','proud','belong','support','rely','remember','tender','accompany','reassure','expect','record','auto','free','free2','acceptLove','self','seek'].filter(k=>f[k]).length;
+    const attachDown = ['prag','press','focus','reality','acceptNo','stable','helpless','silent','obey','depend','hide','doubt','press2','close','unsure','worry','letgo','restraint','seal'].filter(k=>f[k]).length;
+    const resentUp = ['persist','press','focus','reality','acceptNo','stable','press2','close','doubt','unsure'].filter(k=>f[k]).length;
+    const resentDown = ['forgive','forgive2','fate','acceptFate','release','letgo'].filter(k=>f[k]).length;
+    const strangeDown = ['free','free2','acceptLove','self'].filter(k=>f[k]).length;
+    const strangeUp = ['helpless','distance','hide','unsure'].filter(k=>f[k]).length;
+
+    state.attachment += attachUp*3 - attachDown*2;
+    state.resentment += resentUp*2 - resentDown*5;
+    state.strangeness += strangeUp*2 - strangeDown*1;
+
+    // 特定 flag 的额外影响
+    if(f.forgive || f.forgive2){ state.attachment += 3; }
+    if(f.promise){ state.attachment += 4; }
+    if(f.belong){ state.attachment += 5; }
+    if(f.accompany){ state.attachment += 5; }
+    if(f.rely){ state.attachment += 3; }
+
+    state.attachment = Math.max(0, Math.min(100, state.attachment));
+    state.strangeness = Math.max(0, Math.min(100, state.strangeness));
+    state.resentment = Math.max(0, Math.min(100, state.resentment));
+
+    const choice = state.pendingChoice;
+    state.pendingChoice = null;
+    state.choiceResult = { opt, choice };
+
+    const years = state.missionYears;
+    const endAge = state.ageMonths / 12;
+    const startAge = endAge - years;
+    const events = state._eventsForChoice || generateLifeEvents(years, endAge, startAge);
+    const letter = state._letterForChoice || state.letters[state.letters.length-1] || null;
+    const romance = state._romanceForChoice || null;
+
+    state._eventsForChoice = null;
+    state._letterForChoice = null;
+    state._romanceForChoice = null;
+
+    showReturn(years, endAge, events, letter, { opt, choice }, romance);
+  }
+
+  // ===== 事件生成（按主题） =====
+  function generateLifeEvents(years, finalAge, startAge){
+    const events = [];
+    const keys = Object.keys(AGE_THEMES).map(Number).sort((a,b)=>a-b);
+
+    keys.forEach(k=>{
+      if(k >= startAge && k < finalAge){
+        const themes = AGE_THEMES[k] || ['self'];
+        const theme = rand(themes);
+        const pool = EVENT_POOL[theme] || EVENT_POOL.self;
+        if(pool && pool.length){
+          const count = Math.min(pool.length, randInt(1,2));
+          const picked = pickN(pool, count);
+          picked.forEach(t=>{
+            events.push({ age: k+' 岁', text: t });
+          });
+        }
+      }
+    });
+
+    // 取向驱动的剧情分支
+    const o = state.orientation ? state.orientation.id : 'hetero';
+    if(o === 'ace' && finalAge >= 26){
+      events.push({ age: Math.floor(finalAge)+' 岁', text: '她选择了不婚。她说，一个人也可以把日子过成花。' });
+    }
+    if(o === 'homo' && finalAge >= 26){
+      events.push({ age: Math.floor(finalAge)+' 岁', text: '她和一个同性的伴侣在一起了。她们说，要一起养一只猫。' });
+    }
+    if(o === 'bi' && finalAge >= 26){
+      events.push({ age: Math.floor(finalAge)+' 岁', text: '她恋爱了。对方是什么性别，她说，「不重要，重要的是人」。' });
+    }
+
+    // 关系状态驱动的补充
+    if(state.attachment < 20 && state.strangeness > 50){
+      events.unshift({ age: Math.floor(finalAge)+' 岁', text: '她已经记不太清你的样子了。' });
+    }
+    if(state.resentment > 50){
+      events.unshift({ age: Math.floor(finalAge)+' 岁', text: '她学会了不再等你。' });
+    }
+    if(state.attachment > 70){
+      events.unshift({ age: Math.floor(finalAge)+' 岁', text: '她一直留着你给她买的第一件东西。' });
+    }
+    if(state.flags.promise && finalAge > 40){
+      events.unshift({ age: Math.floor(finalAge)+' 岁', text: '她在门口放了一盏灯，说怕你回来太黑。' });
+    }
+
+    if(events.length === 0){
+      events.push({ age: Math.floor(finalAge)+' 岁', text: '时间平静地流过，她又长大了一些。' });
+    }
+    return events;
+  }
+
+  // ===== 信件生成（按年龄 + 取向） =====
+  function generateLetter(finalAge){
+    if(state.attachment < 25 && finalAge > 25){
+      if(Math.random() < 0.7) return null;
+      return `「\n我不知道该写什么。\n你走之后，我有很多年没有想起你了。\n——${state.name}」`;
+    }
+    if(Math.random() < 0.4) return null;
+
+    const y = finalAge;
+    const o = state.orientation ? state.orientation.id : 'hetero';
+    let pool;
+    if(y < 12) pool = LETTERS.child;
+    else if(y < 18) pool = LETTERS.teen;
+    else if(y < 30){
+      if(o === 'ace') pool = LETTERS.adult_ace;
+      else if(o === 'homo') pool = LETTERS.adult_homo;
+      else pool = LETTERS.adult;
+    }
+    else if(y < 60) pool = LETTERS.middle;
+    else pool = LETTERS.old;
+
+    if(!pool) return null;
+    let text = rand(pool);
+    text = text.replace(/\{P\}/g, title()).replace(/\{N\}/g, state.name);
+    return text;
+  }
+
+  // ===== 归来 =====
+  function showReturn(years, finalAge, events, letter, choiceResult, romance){
+    mainPanel.classList.add('hidden');
+    missionPanel.classList.add('hidden');
+    returnPanel.classList.remove('hidden');
+
+    let herWords = state.alive ? rand(SPEECH[getStage()]) : '……';
+    if(state.strangeness > 60 && state.alive){ herWords = "……你是谁？"; }
+    else if(state.resentment > 60 && state.alive){ herWords = "你回来干什么。"; }
+    else if(state.attachment > 70 && state.alive){ herWords = "我知道你会回来的。"; }
+
+    const emoji = getEmoji();
+
+    const eventsHtml = events.map(e=>`
+      <div style="margin:10px 0;">
+        <span class="eventTag">${e.age}</span>
+        <div style="font-size:13px;color:#c7d2fe;line-height:1.9;">${e.text}</div>
+      </div>
+    `).join('');
+
+    let choiceHtml = '';
+    if(choiceResult){
+      choiceHtml = `
+        <div class="card fadeIn">
+          <div style="font-size:13px;color:#fbbf24;font-weight:700;margin-bottom:6px;">💭 你的选择</div>
+          <div style="font-size:13px;color:#c7d2fe;line-height:1.9;">「${choiceResult.opt.text}」</div>
+          <div style="font-size:12px;color:#818cf8;margin-top:6px;font-style:italic;">${choiceResult.opt.effect.desc}</div>
+        </div>
+      `;
+    }
+
+    let romanceHtml = '';
+    if(romance){
+      romanceHtml = `
+        <div class="romanceCard fadeIn">
+          <div class="romanceTitle">✨ 刚好赶上 · ${romance.name}</div>
+          <div class="romanceText">${romance.text}</div>
+        </div>
+      `;
+    }
+
+    let letterHtml = '';
+    if(letter){
+      letterHtml = `
+        <div class="card fadeIn">
+          <div style="font-size:14px;color:#fbbf24;font-weight:700;letter-spacing:1px;margin-bottom:8px;">💌 她写给你的信</div>
+          <div class="diaryBox">${letter.replace(/\n/g,'<br>')}</div>
+        </div>
+      `;
+    }
+
+    let worldHtml = '';
+    if(state.world){
+      worldHtml = `
+        <div class="card fadeIn">
+          <div class="worldTag" style="text-align:center;display:block;">🌍 ${state.world.emoji} ${state.world.name}</div>
+          <div style="font-size:12px;color:#c4b5fd;line-height:1.9;text-align:center;font-style:italic;">
+            ${state.world.desc}
+          </div>
+        </div>
+      `;
+    }
+
+    if(!state.alive){
+      returnPanel.innerHTML = `
+        <div class="card fadeIn">
+          <div class="bigEmoji">⚱️</div>
+          <div class="endingTitle">你回来晚了</div>
+          <div class="storyText">
+            你走了 ${state.missionMinutes || years} 分钟。<br>
+            而她已经过了 ${years} 年。<br><br>
+            你回来时，屋子里空荡荡的。<br>
+            桌上放着一封信，<br>
+            和一小盒骨灰。
+          </div>
+        </div>
+        <div class="card fadeIn">
+          <div style="font-size:13px;color:#c7d2fe;line-height:2;">
+            <b style="color:#fbbf24;">📜 她留给你的信：</b><br><br>
+            "${title()}：<br><br>
+            我不知道你什么时候会回来。<br>
+            我等了你很久。<br>
+            从我还是个小女孩，<br>
+            等到头发都白了。<br><br>
+            ${state.resentment > 50 ? '我恨过你。<br>但我更想你。<br><br>' : ''}
+            我不怪你。<br>
+            我知道你有你的世界。<br>
+            只是……<br>
+            下辈子，你能不能，<br>
+            多陪我一会儿？"
+          </div>
+        </div>
+        <button class="btn gold" id="toEndingBtn">查看结局</button>
+      `;
+      $('toEndingBtn').addEventListener('click', showEnding);
+      return;
+    }
+
+    returnPanel.innerHTML = `
+      <div class="card fadeIn">
+        <div class="bigEmoji">${emoji}</div>
+        <div class="girlName">${state.name}</div>
+        <div class="girlAge">她 ${ageText()}</div>
+        <div class="storyText" style="margin-top:10px;">
+          你离开了 ${state.missionMinutes || years} 分钟。<br>
+          她过了 ${years} 年。
+        </div>
+      </div>
+
+      ${worldHtml}
+      ${romanceHtml}
+
+      <div class="card fadeIn">
+        <div style="font-size:14px;color:#fbbf24;font-weight:700;letter-spacing:1px;margin-bottom:6px;">📖 这些年，她经历了——</div>
+        ${eventsHtml}
+      </div>
+
+      ${choiceHtml}
+      ${letterHtml}
+
+      <div class="card fadeIn">
+        <div class="quote">"${herWords}"</div>
+        <div style="font-size:12px;color:#818cf8;text-align:center;margin-top:8px;">
+          依恋 ${Math.floor(state.attachment)} · 陌生 ${Math.floor(state.strangeness)} · 怨恨 ${Math.floor(state.resentment)}
+        </div>
+      </div>
+
+      <button class="btn" id="backBtn">回到她的身边</button>
+    `;
+
+    $('backBtn').addEventListener('click', ()=>{
+      returnPanel.classList.add('hidden');
+      mainPanel.classList.remove('hidden');
+      render();
+      save();
+    });
+  }
+
+  // ===== 结局 =====
+  function showEnding(){
+    state.ended = true;
+    const meets = state.meetings;
+    const years = state.aliveYears || ageYears();
+    const mems = state.memories;
+    const att = state.attachment;
+    const str = state.strangeness;
+    const res = state.resentment;
+    const flags = state.flags;
+    const o = state.orientation ? state.orientation.id : 'hetero';
+    const y = years;
+
+    let title, emoji, desc;
+    const isF = state.role === 'father';
+
+    if(!state.alive){
+      if(meets <= 1){
+        title='从未相识'; emoji='💔';
+        desc='你只见过她一次，就永远失去了她。她的一生，对你来说只是一瞬。她到死，都没能记住你的样子。';
+      } else if(str >= 75){
+        title='她已不记得你'; emoji='🌫️';
+        desc='你回来的时候，她的墓碑上刻着一个你陌生的名字。她的一生里，你只是一个模糊的影子。她到死，都想不起你的脸。';
+      } else if(res >= 75){
+        title='她恨了你一生'; emoji='🌧️';
+        desc='她等了你一辈子，也恨了你一辈子。她走的时候，手里攥着一封没寄出的信。信上只有一句话："你为什么不来。"';
+      } else if(att >= 75 && meets >= 6){
+        title='她一直在等你'; emoji='💞';
+        desc='她到死都在等你。她相信你一定会回来。她是对的，只是晚了一点点。她在最后一刻，笑了。';
+      } else if(meets <= 3){
+        title='三次相见'; emoji='🕯️';
+        desc='你只回来过三次，她就走完了一生。她等了你一辈子，等到最后，只等来一盒骨灰。';
+      } else if(meets <= 5 && res >= 40){
+        title='带着遗憾的告别'; emoji='🌧️';
+        desc='她恨过你，也爱过你。她走的时候，手里还攥着你小时候给她买的那条发带。';
+      } else if(meets >= 6 && att >= 50){
+        title='时间之外的爱'; emoji='💞';
+        desc='你一次次穿越时间的裂缝，只为回到她身边。她的一生，你几乎都在。她走的时候，是笑着的。';
+      } else if(meets >= 6){
+        title='漫长的陪伴'; emoji='🕰️';
+        desc='你陪她走过了大半生。她老了，你也老了——虽然你的脸没变。她走的时候，你在她身边。';
+      } else if(y >= 60 && att >= 40){
+        title='终于赶上了'; emoji='🕊️';
+        desc='你回来了，赶上了她最后的时刻。她握住你的手，说："你终于来了。"然后闭上了眼睛。';
+      } else if(flags.forgive || flags.forgive2){
+        title='她在最后一刻原谅了你'; emoji='🌸';
+        desc='她曾经恨过你。但在生命的最后，她想通了。她说："你也有你的世界，我不怪你。"';
+      } else if(flags.promise){
+        title='你守住了承诺'; emoji='💫';
+        desc='你答应过她，会一直来。你做到了。她走的时候，你在场。这是你能给的，最好的爱。';
+      } else if(o === 'ace'){
+        title='一个人的一生'; emoji='🌿';
+        desc='她没有结婚，没有孩子。她一个人走完了一生。她说过，一个人也很好。她走的时候，身边只有一只猫。';
+      } else if(o === 'homo'){
+        title='她爱过'; emoji='🌈';
+        desc='她和一个同性伴侣走完了一生。她们没有孩子，但她们很幸福。她走的时候，伴侣握着她的手。';
+      } else {
+        title='一个普通人的一生'; emoji='🕯️';
+        desc='她走完了自己的一生。你不在场。她的一生中，你只出现了几次，像一个短暂的梦。';
+      }
+    }
+    else {
+      if(att >= 85 && str <= 15 && meets >= 8){
+        title='永不离开的人'; emoji='💞';
+        desc='你几乎陪她度过了整个人生。她说，你是她见过最奇怪、也最好的'+(isF?'父亲':'母亲')+'。她学会了你离开的规律，也学会了在每次你走之前，笑着说再见。';
+      } else if(att >= 75 && meets >= 6){
+        title='时间里的陪伴者'; emoji='💫';
+        desc='她长大了，你们的关系像一条被时间拉长的线，细，但没断。她知道你一定会回来。她学会了等待，也学会了不害怕。';
+      } else if(att >= 65 && (flags.forgive || flags.forgive2)){
+        title='她原谅了你'; emoji='🌸';
+        desc='她曾经恨过你，但最终选择了原谅。她说："你有你的世界，我有我的人生。我们都没错。"';
+      } else if(att >= 60 && flags.love && flags.hope){
+        title='爱与被爱的她'; emoji='💕';
+        desc='她结婚了，有了自己的家庭。婚礼那天，她望了很久门口。你没有来，但她说，没关系。';
+      } else if(att >= 60 && o === 'ace'){
+        title='一个人的她，也很好'; emoji='🌿';
+        desc='她没有结婚，也没有孩子。她一个人住在一间有院子的房子里，养了三只猫。她说，她这一生，很安静，也很满足。';
+      } else if(att >= 60 && o === 'homo'){
+        title='她找到了她的家'; emoji='🌈';
+        desc='她和一个同性的伴侣在一起了。她们没有办婚礼，但她们很幸福。她说，她终于知道，什么是"家"了。';
+      } else if(att >= 55 && flags.dream){
+        title='追梦的她'; emoji='🌠';
+        desc='她辞了职，去做了一件自己真正想做的事。她说，是你教会了她，人生可以不一样。';
+      } else if(att >= 50 && flags.kind){
+        title='温柔的她'; emoji='🌷';
+        desc='她成为了一个善良的人。她收养了一只流浪猫，就像当年你收养她一样。';
+      } else if(att >= 50 && flags.persist){
+        title='坚持的她'; emoji='🎹';
+        desc='她没有放弃钢琴，后来成为了一个演奏者。她说，她一直记得你说过"坚持会感谢自己"。';
+      } else if(str >= 75){
+        title='一个陌生人'; emoji='🌫️';
+        desc='她长大了，但你对她来说，只是一个偶尔出现的陌生人。她有自己的人生了，不需要你。她过得很好。';
+      } else if(res >= 75){
+        title='她学会了不再等你'; emoji='🌧️';
+        desc='她不再恨你，也不再等你。她有了自己的生活，把你放在了很远的角落。她说："我已经不需要了。"';
+      } else if(res >= 50 && flags.reality){
+        title='现实主义的她'; emoji='💼';
+        desc='她选择了最稳妥的路。她过得很好，但她的眼神里，总有一点你读不懂的东西。';
+      } else if(flags.truth && flags.protect){
+        title='她成为了'+(isF?'母亲':'父亲')+'一样的人'; emoji='🏡';
+        desc='她有了自己的孩子。她给孩子讲你的故事，讲的时候，眼睛里有光，也有泪。';
+      } else if(y >= 60 && att >= 40){
+        title='她还在等你'; emoji='⏳';
+        desc='她老了，头发白了。她还在等你下次回来。她说："我知道你会来的。"';
+      } else if(meets >= 6 && att >= 40){
+        title='她理解了你'; emoji='🌙';
+        desc='她长大了，慢慢地理解了你。她知道你有你的世界，也知道你爱她。只是，爱得有点远。';
+      } else if(meets >= 4){
+        title='她有自己的生活'; emoji='🌿';
+        desc='她有了自己的生活、自己的朋友、自己的家。你不在的时候，她也过得很好。这是你想要的吗？';
+      } else if(meets <= 2){
+        title='几乎陌生的她'; emoji='🌫️';
+        desc='你几乎没怎么出现。她的人生里，你只是一道模糊的影子。她过得很好，没有你，也很好。';
+      } else {
+        title='她还在长大'; emoji='⏳';
+        desc='她的故事还没有结束。她还在等你下次回来。';
+      }
+    }
+
+    gameArea.classList.add('hidden');
+    endingArea.classList.remove('hidden');
+
+    const worldLine = state.world ? `${state.world.emoji} ${state.world.name}` : '—';
+
+    const timelineHtml = state.timeline.length ? `
+      <div class="timeline">
+        <b>🕰 她的时间线</b><br>
+        ${state.timeline.map(t=>'· '+t).join('<br>')}
+      </div>` : '';
+
+    endingArea.innerHTML = `
+      <div class="card fadeIn" style="margin-top:20px;">
+        <div class="bigEmoji">${emoji}</div>
+        <div class="endingTitle">${title}</div>
+        <div class="storyText">${desc}</div>
+        <div class="divider">· · ·</div>
+        <div class="center" style="font-size:13px;color:#a78bfa;line-height:2;">
+          她的名字：${state.name}<br>
+          你是她的：${isF?'父亲':'母亲'}<br>
+          她的世界：${worldLine}<br>
+          她的性格：${state.personality?state.personality.name:'—'}<br>
+          她的爱好：${state.hobby?state.hobby.name:'—'}<br>
+          她的取向：${state.orientation?state.orientation.name:'—'}<br>
+          你旅行了 ${state.playerTrips} 次<br>
+          你们相见 ${meets} 次<br>
+          依恋 ${Math.floor(att)} · 陌生 ${Math.floor(str)} · 怨恨 ${Math.floor(res)}<br>
+          她最后 ${state.alive ? ageText() : '不在人世（' + Math.floor(years) + ' 岁）'}
+        </div>
+        ${timelineHtml}
+        ${mems.length ? `
+        <div class="memories">
+          <b>📜 记忆碎片</b><br>
+          ${mems.slice(-18).map(m=>'· '+m).join('<br>')}
+        </div>` : ''}
+        <button class="btn gold" id="againBtn" style="margin-top:14px;">🔁 时间倒流，重新开始</button>
+      </div>
+    `;
+    $('againBtn').addEventListener('click', resetGame);
+    localStorage.removeItem(SAVE_KEY);
+  }
+
+  // ===== 重置 =====
+  function resetGame(){
+    if(tickerId){ clearInterval(tickerId); tickerId = null; }
+    localStorage.removeItem(SAVE_KEY);
+    state = initState();
+    endingArea.classList.add('hidden');
+    gameArea.classList.remove('hidden');
+    mainPanel.classList.add('hidden');
+    missionPanel.classList.add('hidden');
+    returnPanel.classList.add('hidden');
+    introPanel.classList.add('hidden');
+    showIntro();
+  }
+
+  // ===== 保存/读取 =====
+  function save(){
+    try{
+      if(state.missionRunning && state.missionRunningSince){
+        const now = Date.now();
+        state.missionAccumulated += (now - state.missionRunningSince) / 1000;
+        state.missionRunningSince = now;
+      }
+      localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+    }catch(e){}
+  }
+
+  function load(){
+    try{
+      const raw = localStorage.getItem(SAVE_KEY);
+      if(!raw) return false;
+      const d = JSON.parse(raw);
+      if(!d || d.ended) return false;
+      state = Object.assign(initState(), d);
+
+      // 兼容旧存档：如果没有 world，就随机一个
+      if(!state.world) state.world = rand(WORLDS);
+
+      if(state.missionRunning && state.missionRunningSince){
+        const now = Date.now();
+        const dt = (now - state.missionRunningSince) / 1000;
+        state.missionAccumulated += dt;
+        state.missionRunningSince = now;
+
+        if(state.missionAccumulated >= state.missionTargetSeconds){
+          state.missionAccumulated = state.missionTargetSeconds;
+        }
+      }
+      return true;
+    }catch(e){ return false; }
+  }
+
+  // ===== 启动 =====
+  state = initState();
+  const loaded = load();
+
+  if(loaded && state.introDone){
+    if(state.missionTargetSeconds && state.missionAccumulated < state.missionTargetSeconds){
+      gameArea.classList.remove('hidden');
+      mainPanel.classList.add('hidden');
+      introPanel.classList.add('hidden');
+      showMission();
+      if(state.missionRunning){
+        startMissionTick();
+      }
+    } else if(state.missionTargetSeconds && state.missionAccumulated >= state.missionTargetSeconds){
+      gameArea.classList.remove('hidden');
+      mainPanel.classList.add('hidden');
+      introPanel.classList.add('hidden');
+      finishMission();
+    } else {
+      gameArea.classList.remove('hidden');
+      mainPanel.classList.remove('hidden');
+      introPanel.classList.add('hidden');
+      render();
+    }
+  } else {
+    state.introDone = true;
+    showIntro();
+  }
+
+  travelBtn.addEventListener('click', travel);
+  resetBtn.addEventListener('click', ()=>{
+    if(confirm('确定重新开始吗？时间会倒流。')) resetGame();
+  });
+
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.hidden) save();
+    else {
+      if(state && state.missionRunning){
+        const now = Date.now();
+        if(state.missionRunningSince){
+          const dt = (now - state.missionRunningSince) / 1000;
+          state.missionAccumulated += dt;
+          state.missionRunningSince = now;
+        }
+        if(state.missionAccumulated >= state.missionTargetSeconds){
+          state.missionAccumulated = state.missionTargetSeconds;
+          finishMission();
+        } else if(missionPanel && !missionPanel.classList.contains('hidden')){
+          updateMissionDisplay();
+        }
+      }
+    }
+  });
+
+  window.addEventListener('beforeunload', save);
+
+  document.addEventListener('dblclick', e=>e.preventDefault(), {passive:false});
+})();
+</script>
+</body>
+</html>
